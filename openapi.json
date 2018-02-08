@@ -1,0 +1,366 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Swagger Petstore",
+    "description": "A sample API that uses a petstore as an example to demonstrate features in the OpenAPI 3.0 specification",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "name": "Swagger API Team",
+      "email": "foo@example.com",
+      "url": "http://madskristensen.net"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "http://github.com/gruntjs/grunt/blob/master/LICENSE-MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://petrovich.ru/api/pet/v002"
+    }
+  ],
+  "paths": {
+    "/order/list": {
+      "get": {
+        "description": "Получение списка заказов\n",
+        "operationId": "findOrders",
+        "responses": {
+          "200": {
+            "description": "order response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "orders": {
+                          "type": "array",
+                          "$ref": "#/components/schemas/Order"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a new pet in the store.  Duplicates are allowed",
+        "operationId": "addPet",
+        "requestBody": {
+          "description": "Pet to add to the store",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewPet"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "pet response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pet"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pets/{id}": {
+      "get": {
+        "description": "Returns a user based on a single ID, if the user does not have access to the pet",
+        "operationId": "find pet by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of pet to fetch",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "pet response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pet"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "deletes a single pet based on the ID supplied",
+        "operationId": "deletePet",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of pet to delete",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "pet deleted"
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Response": {
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "status": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object"
+          }
+        }
+      },
+      "Order": {
+        "properties": {
+          "created": {
+            "type": "integer"
+          },
+          "delivery": {
+            "type": "object",
+            "properties": {
+              "address": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "isDelivery": {
+                "type": "boolean"
+              },
+              "type": {
+                "type": "string"
+              }
+            }
+          },
+          "documentDate": {
+            "type": "integer"
+          },
+          "hash": {
+            "type": "string"
+          },
+          "highlight": {
+            "type": "array"
+          },
+          "isDelivery": {
+            "type": "boolean"
+          },
+          "isMobile": {
+            "type": "boolean"
+          },
+          "modified": {
+            "type": "integer"
+          },
+          "order1cNumber": {
+            "type": "string"
+          },
+          "origin": {
+            "type": "object",
+            "properties": {
+              "alias": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              }
+            }
+          },
+          "price": {
+            "type": "integer"
+          },
+          "products": {
+            "type": "array",
+            "$ref": "#/components/schemas/Product"
+          },
+          "project": {
+            "type": "object"
+          },
+          "score": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "object",
+            "properties": {
+              "alias": {
+                "type": "string"
+              },
+              "code": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "type": {
+            "type": "string"
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "cardNumber": {
+                "type": "string"
+              },
+              "contractId": {
+                "type": "string"
+              },
+              "contractorId": {
+                "type": "string"
+              },
+              "legalInn": {
+                "type": "string"
+              },
+              "userId": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      },
+      "Product": {
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "sum": {
+            "type": "integer"
+          },
+          "title": {
+            "type": "string"
+          },
+          "topSectionId": {
+            "type": "string"
+          },
+          "weight": {
+            "type": "integer"
+          }
+        }
+      },
+      "Pet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/NewPet"
+          },
+          {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          }
+        ]
+      },
+      "NewPet": {
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "tag": {
+            "type": "string"
+          }
+        }
+      },
+      "Error": {
+        "required": [
+          "code",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
